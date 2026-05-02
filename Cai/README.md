@@ -1,211 +1,239 @@
-Microsoft cũng ghi rõ: muốn client app kết nối ổn định thì thường phải bật TCP/IP protocol trong SQL Server Configuration Manager và restart service sau khi bật.
+# HƯỚNG DẪN KẾT NỐI SQL SERVER VỚI NETBEANS CHI TIẾT TỪ A-Z
 
-Tao sẽ chỉ mày từ A tới Z đúng kiểu phòng máy, từng cú click chuột, kể cả đoạn Computer Management.
+Microsoft cũng ghi rõ: muốn client app kết nối ổn định thì thường phải
+bật TCP/IP protocol trong SQL Server Configuration Manager và restart
+service sau khi bật.
 
-PHẦN 1 — KIỂM TRA SQL SERVER ĐÃ CÀI ĐÚNG CHƯA
+Tài liệu này hướng dẫn đúng kiểu phòng máy, từng cú click chuột, kể cả
+đoạn Computer Management.
 
-Mày cần có:
+------------------------------------------------------------------------
 
-SQL Server (2012/2014/2019 đều được)
-SQL Server Management Studio (SSMS)
-NetBeans 8.2
-JDK 8
-PHẦN 2 — MỞ COMPUTER MANAGEMENT NHƯ THẦY MỞ
-Bước 1:
+## PHẦN 1 --- KIỂM TRA SQL SERVER ĐÃ CÀI ĐÚNG CHƯA
+
+Cần có:
+
+-   SQL Server (2012/2014/2019 đều được)
+-   SQL Server Management Studio (SSMS)
+-   NetBeans 8.2
+-   JDK 8
+
+------------------------------------------------------------------------
+
+## PHẦN 2 --- MỞ COMPUTER MANAGEMENT NHƯ THẦY MỞ
+
+### Bước 1:
 
 Nhấn:
 
-Windows + R
+`Windows + R`
 
 gõ:
 
-compmgmt.msc
+`compmgmt.msc`
 
 Enter.
 
 Nó mở:
 
-Computer Management
+**Computer Management**
 
 Bên trái chọn:
 
-Services and Applications
+`Services and Applications`
 
 rồi chọn:
 
-Services
-Bước 2: tìm service SQL
+`Services`
+
+------------------------------------------------------------------------
+
+### Bước 2: tìm service SQL
 
 Kéo xuống tìm:
 
-SQL Server (MSSQLSERVER)
+`SQL Server (MSSQLSERVER)`
 
 hoặc
 
-SQL Server (SQLEXPRESS)
+`SQL Server (SQLEXPRESS)`
 
 tùy bản cài.
 
-Phải thấy status = Running
+Phải thấy:
 
-Nếu nó đang Stop:
+`Status = Running`
 
-chuột phải → Start.
+Nếu đang Stop:
 
-Bước 3: tìm thêm SQL Server Browser
+Chuột phải → **Start**
+
+------------------------------------------------------------------------
+
+### Bước 3: tìm thêm SQL Server Browser
 
 Tìm:
 
-SQL Server Browser
+`SQL Server Browser`
 
-chuột phải → Start luôn.
+Chuột phải → **Start**
 
-Cái này giúp máy khác hoặc app khác tìm thấy instance SQL.
+Cái này giúp app khác tìm thấy instance SQL.
 
-PHẦN 3 — BẬT TÀI KHOẢN sa VÀ SQL AUTHENTICATION
+------------------------------------------------------------------------
 
-Đây là chỗ nhiều đứa quên.
+## PHẦN 3 --- BẬT TÀI KHOẢN sa VÀ SQL AUTHENTICATION
 
 Mở:
 
-SQL Server Management Studio (SSMS)
+**SQL Server Management Studio (SSMS)**
 
-đăng nhập bằng:
+Đăng nhập bằng:
 
-Windows Authentication
+`Windows Authentication`
 
-vì lúc đầu chưa chắc sa login được.
+------------------------------------------------------------------------
 
 Sau khi vào:
 
 Bên Object Explorer:
 
-chuột phải tên server trên cùng → Properties.
+Chuột phải tên server trên cùng → **Properties**
 
 Chọn tab:
 
-Security
+`Security`
 
 Tick:
 
-SQL Server and Windows Authentication mode
+`SQL Server and Windows Authentication mode`
 
-Đây gọi là Mixed Mode.
-
-Nếu không bật cái này:
-
-NetBeans dùng user sa sẽ không login được.
-
-Cộng đồng SQL cũng gặp lỗi này suốt: SQL authentication fail nếu server chỉ để Windows auth.
+Đây gọi là **Mixed Mode**.
 
 Bấm OK.
 
-Restart SQL Server
+------------------------------------------------------------------------
 
-Chuột phải server → Restart.
+### Restart SQL Server
 
-PHẦN 4 — BẬT USER sa VÀ ĐẶT PASSWORD
+Chuột phải server → **Restart**
 
-Trong SSMS:
+------------------------------------------------------------------------
 
-mở:
+## PHẦN 4 --- BẬT USER sa VÀ ĐẶT PASSWORD
 
-Security
-   → Logins
+Trong SSMS mở:
 
-thấy user:
+`Security -> Logins`
 
-sa
+Thấy user:
 
-chuột phải sa → Properties.
+`sa`
 
-Tab General:
+Chuột phải `sa` → **Properties**
 
-đặt password:
+------------------------------------------------------------------------
 
-1
+### Tab General:
 
-hoặc gì dễ nhớ.
+Đặt password:
 
-bỏ tick enforce password policy nếu cần.
+`1`
 
-Tab Status:
+hoặc password dễ nhớ.
 
-chọn:
+Bỏ tick enforce password policy nếu cần.
 
-Login: Enabled
-Permission to connect: Grant
+------------------------------------------------------------------------
 
-OK.
+### Tab Status:
 
-PHẦN 5 — MỞ SQL SERVER CONFIGURATION MANAGER (CỰC QUAN TRỌNG)
+Chọn:
 
-Đây là chỗ thầy m chắc chắn có mở.
+-   Login: `Enabled`
+-   Permission to connect: `Grant`
 
-Windows + R gõ một trong các lệnh:
+Bấm OK.
 
-nếu SQL 2019:
+------------------------------------------------------------------------
 
-SQLServerManager15.msc
+## PHẦN 5 --- MỞ SQL SERVER CONFIGURATION MANAGER
 
-nếu SQL 2017:
+Windows + R gõ:
 
-SQLServerManager14.msc
+### nếu SQL 2019:
 
-nếu SQL 2016:
+`SQLServerManager15.msc`
 
-SQLServerManager13.msc
+### nếu SQL 2017:
 
-Microsoft có đúng danh sách file .msc theo version như vậy.
+`SQLServerManager14.msc`
 
-Nếu không biết version cứ search Start Menu:
+### nếu SQL 2016:
 
-SQL Server Configuration Manager
+`SQLServerManager13.msc`
+
+Hoặc search Start Menu:
+
+`SQL Server Configuration Manager`
+
+------------------------------------------------------------------------
+
 Trong đó vào:
-SQL Server Network Configuration
-   → Protocols for MSSQLSERVER
 
-hoặc Protocols for SQLEXPRESS.
+`SQL Server Network Configuration -> Protocols for MSSQLSERVER`
+
+hoặc:
+
+`Protocols for SQLEXPRESS`
 
 Bên phải sẽ thấy:
 
-Shared Memory
-Named Pipes
-TCP/IP
-Chuột phải TCP/IP → Enable
+-   Shared Memory
+-   Named Pipes
+-   TCP/IP
+
+------------------------------------------------------------------------
+
+### Chuột phải TCP/IP → Enable
 
 Bắt buộc bật.
 
-Vì SQL client app như NetBeans JDBC thường dùng TCP/IP để kết nối. Sau khi bật phải restart service thì mới ăn.
+------------------------------------------------------------------------
 
-Chuột phải TCP/IP → Properties
+### Chuột phải TCP/IP → Properties
 
-qua tab:
+Qua tab:
 
-IP Addresses
+`IP Addresses`
 
-kéo xuống dưới cùng IPAll
+Kéo xuống cuối `IPAll`
 
-xem:
+Xem:
 
-TCP Port = 1433
+`TCP Port = 1433`
 
-nếu trống thì điền 1433.
+nếu trống thì điền `1433`
 
-TCP Dynamic Ports xóa trống.
+`TCP Dynamic Ports` xóa trống.
 
 Apply.
 
-Sau đó vào:
-SQL Server Services
+------------------------------------------------------------------------
 
-chuột phải:
+### Sau đó vào:
 
-SQL Server (MSSQLSERVER)
+`SQL Server Services`
+
+Chuột phải:
+
+`SQL Server (MSSQLSERVER)`
 
 → Restart.
 
-PHẦN 6 — TEST SQL SERVER BẰNG SSMS TRƯỚC
+------------------------------------------------------------------------
+
+## PHẦN 6 --- TEST SQL SERVER BẰNG SSMS TRƯỚC
 
 Thoát SSMS.
 
@@ -213,39 +241,44 @@ Mở lại.
 
 Login bằng:
 
-SQL Server Authentication
+`SQL Server Authentication`
 
 User:
 
-sa
+`sa`
 
 Password:
 
-1
+`1`
 
 Server name:
 
-localhost
+`localhost`
 
 hoặc
 
-localhost,1433
+`localhost,1433`
 
 Nếu vào được:
 
-=> SQL đã ổn.
+=\> SQL đã ổn.
 
-PHẦN 7 — TẠO DATABASE CHO NETBEANS
+------------------------------------------------------------------------
+
+## PHẦN 7 --- TẠO DATABASE CHO NETBEANS
 
 Trong SSMS bấm New Query:
 
+``` sql
 create database HBDemo
 go
+```
 
 Execute.
 
 Sau đó:
 
+``` sql
 use HBDemo
 go
 
@@ -254,7 +287,11 @@ create table Student(
    name nvarchar(100),
    age int
 )
-PHẦN 8 — ADD JDBC DRIVER VÀO NETBEANS
+```
+
+------------------------------------------------------------------------
+
+## PHẦN 8 --- ADD JDBC DRIVER VÀO NETBEANS
 
 Mở NetBeans.
 
@@ -262,24 +299,27 @@ Tạo Java Project hoặc Web Project.
 
 Bên trái project:
 
-Libraries
+`Libraries`
 
-chuột phải:
+Chuột phải:
 
-Add JAR/Folder
+`Add JAR/Folder`
 
-thêm file:
+Thêm file:
 
-sqljdbc4.jar
+`sqljdbc4.jar`
 
-hoặc sqljdbc42.jar.
+hoặc
 
-(Nếu chưa có tao gửi link tải sau.)
+`sqljdbc42.jar`
 
-PHẦN 9 — TEST KẾT NỐI JDBC THUẦN TRƯỚC
+------------------------------------------------------------------------
 
-Tạo class TestConnect.java
+## PHẦN 9 --- TEST KẾT NỐI JDBC THUẦN TRƯỚC
 
+Tạo class `TestConnect.java`
+
+``` java
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -300,30 +340,43 @@ public class TestConnect {
         }
     }
 }
+```
 
 Run.
 
 Nếu hiện:
 
-KET NOI THANH CONG
+`KET NOI THANH CONG`
 
-thì NetBeans đã bắt tay được với SQL.
+thì NetBeans đã kết nối thành công.
 
-PHẦN 10 — SAU NÀY HIBERNATE/JPA CHỈ DÙNG LẠI CHUỖI NÀY
+------------------------------------------------------------------------
+
+## PHẦN 10 --- SAU NÀY HIBERNATE/JPA CHỈ DÙNG LẠI CHUỖI NÀY
+
+``` text
 jdbc:sqlserver://localhost:1433;databaseName=HBDemo
+```
 
 User:
 
-sa
+`sa`
 
 Pass:
 
-1
-TỔNG KẾT NHỮNG THỨ THẦY MỞ LÀ ĐỂ LÀM GÌ
-Công cụ	Mục đích
-Computer Management	kiểm tra service SQL đang chạy
-SSMS	bật mixed mode + sa + tạo DB
-SQL Server Configuration Manager	bật TCP/IP port 1433
-NetBeans	add JDBC và test code
+`1`
 
-Thiếu 1 trong 4 cái là dễ connect fail.
+------------------------------------------------------------------------
+
+## TỔNG KẾT NHỮNG THỨ THẦY MỞ LÀ ĐỂ LÀM GÌ
+
+  Công cụ                            Mục đích
+  ---------------------------------- --------------------------------
+  Computer Management                kiểm tra service SQL đang chạy
+  SSMS                               bật mixed mode + sa + tạo DB
+  SQL Server Configuration Manager   bật TCP/IP port 1433
+  NetBeans                           add JDBC và test code
+
+------------------------------------------------------------------------
+
+Thiếu 1 trong 4 cái là rất dễ connect fail.
