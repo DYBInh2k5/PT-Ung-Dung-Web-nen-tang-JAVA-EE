@@ -1,0 +1,4 @@
+Tạo các project theo mô hình MVC:
+1. Giải phương trình bậc nhất: ax + b = 0.
+2. Giải phương trình bậc hai: ax^2 + bx + c = 0.
+3. Đổi nhiệt độ từ C sang F và ngược lại.
